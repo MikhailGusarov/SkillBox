@@ -20,7 +20,8 @@ violator_songs_list = [
 # Обратите внимание, что делать много вычислений внутри print() - плохой стиль.
 # Лучше заранее вычислить необходимое, а затем в print(xxx, yyy, zzz)
 
-# TODO здесь ваш код
+sum_3_songs = round(violator_songs_list[3][1] + violator_songs_list[5][1] + violator_songs_list[-1][1],2)
+print('Три песни звучат {} минут'.format(sum_3_songs))
 
 # Есть словарь песен группы Depeche Mode
 violator_songs_dict = {
