@@ -28,16 +28,15 @@ else:
     print('No')
 
 
-
 # Усложненное задание, решать по желанию.
 # Заданы размеры hole_x, hole_y прямоугольного отверстия и размеры brick_х, brick_у, brick_z кирпича (все размеры
 # могут быть в диапазоне от 1 до 1000)
 #
 # Определить, пройдет ли кирпич через отверстие (грани кирпича параллельны сторонам отверстия)
 
-# hole_x, hole_y = 8, 9
+hole_x, hole_y = 8, 9
 # brick_x, brick_y, brick_z = 11, 10, 2
-# brick_x, brick_y, brick_z = 11, 2, 10
+brick_x, brick_y, brick_z = 11, 2, 10
 # brick_x, brick_y, brick_z = 10, 11, 2
 # brick_x, brick_y, brick_z = 10, 2, 11
 # brick_x, brick_y, brick_z = 2, 10, 11
@@ -56,4 +55,22 @@ else:
 # brick_x, brick_y, brick_z = 3, 11, 6
 # (просто раскоментировать нужную строку и проверить свой код)
 
-# TODO здесь ваш код
+if brick_x < brick_y:
+    min_1 = brick_x
+    if brick_z < brick_y:
+        min_2 = brick_z
+    else:
+        min_2 = brick_y
+else:
+    min_1 = brick_y
+    if brick_z < brick_x:
+        min_2 = brick_z
+    else:
+        min_2 = brick_x
+
+if hole_x >= min_1 and hole_y >= min_2:
+    print('Yes')
+elif hole_x >= min_2 and hole_y >= min_1:
+    print('Yes')
+else:
+    print('No')
