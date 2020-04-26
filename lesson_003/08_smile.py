@@ -27,5 +27,6 @@ def draw_smile(x, y, color=sd.COLOR_YELLOW):
     sd.line(sd.get_point(x + 22, y + 15), sd.get_point(x+40, y+30))
 
 
-draw_smile(400, 400)
+for _ in range(100):
+    draw_smile(sd.random_number(0, sd.resolution[0]), sd.random_number(0, sd.resolution[1]))
 sd.pause()
