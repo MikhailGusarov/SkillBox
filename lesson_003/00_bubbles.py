@@ -13,12 +13,10 @@ def draw_bubble(center, radius, step):
 
 sd.resolution = (1200, 600)
 
-# Нарисовать 10 пузырьков в ряд
-for x in range(100, 1001, 100):
-    draw_bubble(sd.get_point(x, 300), 50, 5)
-
 # Нарисовать три ряда по 10 пузырьков
-# TODO здесь ваш код
+for x in range(100, 1001, 100):
+    for y in range(200, 401, 100):
+        draw_bubble(sd.get_point(x, y), 50, 5)
 
 # Нарисовать 100 пузырьков в произвольных местах экрана случайными цветами
 # TODO здесь ваш код
