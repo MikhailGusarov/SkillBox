@@ -10,5 +10,10 @@
 #   Студенту надо попросить ХХХ.ХХ рублей
 
 educational_grant, expenses = 10000, 12000
+need_money = expenses - educational_grant
 
-# TODO здесь ваш код
+for month_number in range(2, 11):
+    expenses += expenses * 0.03
+    need_money += expenses - educational_grant
+
+print('Студенту надо попросить {} рублей'.format(round(need_money, 2)))
