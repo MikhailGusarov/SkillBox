@@ -27,7 +27,66 @@ import simple_draw as sd
 # sd.line()
 # Результат решения см lesson_004/results/exercise_01_shapes.jpg
 
-# TODO здесь ваш код
+
+def triangle(start_point, angle, length):
+    """Draw triangle.
+    Start_point is start position for draw (down left angle)
+    angle is tilt angle base regarding axis x
+    length is length one side"""
+    new_point = start_point
+    for step_angle in range(angle, angle + 241, 120):
+        vector = sd.get_vector(start_point=new_point, angle=step_angle, length=length)
+        vector.draw(width=3)
+        new_point = vector.end_point
+
+
+def square(start_point, angle, length):
+    """Draw square.
+    Start_point is start position for draw (down left angle)
+    angle is tilt angle base regarding axis x
+    length is length one side"""
+    new_point = start_point
+    for step_angle in range(angle, angle + 271, 90):
+        vector = sd.get_vector(start_point=new_point, angle=step_angle, length=length)
+        vector.draw(width=3)
+        new_point = vector.end_point
+
+
+def pentagon(start_point, angle, length):
+    """Draw triangle.
+    Start_point is start position for draw (down left angle)
+    angle is tilt angle base regarding axis x
+    length is length one side"""
+    new_point = start_point
+    for step_angle in range(angle, angle + 289, 72):
+        vector = sd.get_vector(start_point=new_point, angle=step_angle, length=length)
+        vector.draw(width=3)
+        new_point = vector.end_point
+
+
+def hexagon(start_point, angle, length):
+    """Draw triangle.
+    Start_point is start position for draw (down left angle)
+    angle is tilt angle base regarding axis x
+    length is length one side"""
+    new_point = start_point
+    for step_angle in range(angle, angle + 301, 60):
+        vector = sd.get_vector(start_point=new_point, angle=step_angle, length=length)
+        vector.draw(width=3)
+        new_point = vector.end_point
+
+
+point = sd.get_point(100, 100)
+triangle(start_point=point, angle=10, length=100)
+
+point = sd.get_point(300, 100)
+square(start_point=point, angle=20, length=100)
+
+point = sd.get_point(100, 300)
+pentagon(start_point=point, angle=0, length=100)
+
+point = sd.get_point(300, 300)
+hexagon(start_point=point, angle=0, length=100)
 
 # Часть 1-бис.
 # Попробуйте прикинуть обьем работы, если нужно будет внести изменения в этот код.
