@@ -29,13 +29,17 @@ sd.resolution = (1200, 900)
 
 
 def draw_branches(start_point, angle, length):
+    if length < 5:
+        return
     vector_0 = sd.get_vector(start_point=start_point, angle=angle, length=length)
     vector_0.draw()
     next_point = vector_0.end_point
-    vector1 = sd.get_vector(start_point=next_point, angle=angle + 30, length=length)
-    vector1.draw()
-    vector2 = sd.get_vector(start_point=next_point, angle=angle - 30, length=length)
-    vector2.draw()
+    delta_angle = 30 + sd.random_number(0, 40) / 100
+    delta_length = .75 + sd.random_number(-10, 10) / 100
+    draw_branches(start_point=next_point, angle=angle + delta_angle, length=length * delta_length)
+    delta_angle = 30 + sd.random_number(0, 40) / 100
+    delta_length = .75 + sd.random_number(-10, 10) / 100
+    draw_branches(start_point=next_point, angle=angle - delta_angle, length=length * delta_length)
 
 
 point = sd.get_point(600, 0)
