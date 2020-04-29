@@ -25,8 +25,21 @@ import simple_draw as sd
 # Возможный результат решения см lesson_004/results/exercise_04_fractal_01.jpg
 
 # можно поиграть -шрифтами- цветами и углами отклонения
+sd.resolution = (1200, 900)
 
-# TODO здесь ваш код
+
+def draw_branches(start_point, angle, length):
+    vector_0 = sd.get_vector(start_point=start_point, angle=angle, length=length)
+    vector_0.draw()
+    next_point = vector_0.end_point
+    vector1 = sd.get_vector(start_point=next_point, angle=angle + 30, length=length)
+    vector1.draw()
+    vector2 = sd.get_vector(start_point=next_point, angle=angle - 30, length=length)
+    vector2.draw()
+
+
+point = sd.get_point(600, 0)
+draw_branches(start_point=point, angle=90, length=200)
 
 # 4) Усложненное задание (делать по желанию)
 # - сделать рандомное отклонение угла ветвей в пределах 40% от 30-ти градусов
