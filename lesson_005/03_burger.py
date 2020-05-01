@@ -31,4 +31,18 @@ def make_double_cheeseburger():
     my_burger.add_bun()
 
 
+def make_favorite_burger():
+    my_burger.add_bun()
+    my_burger.add_cheese()
+    my_burger.add_cutlet()
+    my_burger.add_bacon()
+    my_burger.add_cheese()
+    my_burger.add_cucumber()
+    my_burger.add_cheese()
+    my_burger.add_mustard()
+    my_burger.add_cheese_souse()
+    my_burger.add_bun()
+
+
 make_double_cheeseburger()
+make_favorite_burger()

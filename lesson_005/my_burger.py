@@ -25,3 +25,10 @@ def add_ketchup():
 def add_mustard():
     print('А теперь добавим горчицу...')
 
+
+def add_bacon():
+    print('А теперь добавим бекон...')
+
+
+def add_cheese_souse():
+    print('А теперь добавим сурный соус...')
