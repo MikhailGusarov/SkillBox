@@ -20,7 +20,7 @@ room_1 += (cs_house2_room1.folks)
 room_1 += (ss_house1_room1.folks)
 room_1 += (ss_house2_room1.folks)
 
-print('В комнате room_1 живут:', room_1)
+print('В комнате room_1 живут:', ', '.join(room_1))
 
 room_2 = []
 room_2 += (cs_house1_room2.folks)
@@ -28,4 +28,4 @@ room_2 += (cs_house2_room2.folks)
 room_2 += (ss_house1_room2.folks)
 room_2 += (ss_house2_room2.folks)
 
-print('В комнате room_2 живут:', room_2)
+print('В комнате room_2 живут:', ', '.join(room_2))
