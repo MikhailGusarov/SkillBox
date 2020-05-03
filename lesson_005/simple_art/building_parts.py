@@ -25,14 +25,14 @@ def draw_wall(width_brick, height_brick, point_start_wall, point_end_wall):
                 width_brick_final = width_brick
 
             start_point_brick = sd.get_point(x=x, y=y)
-            get_brick(start_point=start_point_brick, width=width_brick_final, height=height_brick, color=color)
+            draw_brick(start_point=start_point_brick, width=width_brick_final, height=height_brick, color=color)
         count += 1
 
 
 def draw_roof(start_point, length_grounds, angle, color=sd.COLOR_DARK_RED):
     point_1 = start_point
     point_2 = sd.get_point(start_point.x+length_grounds, start_point.y)
-    point_3 = sd.get_point(start_point.x+length_grounds/2, start_point.y+length_grounds/2/sd.cos(angle))
+    point_3 = sd.get_point(start_point.x+length_grounds/2, start_point.y+(length_grounds/2)/sd.cos(angle))
     sd.polygon(point_list=[point_1, point_2, point_3], width=0, color=color)
 
 
