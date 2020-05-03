@@ -23,7 +23,11 @@ def draw_tree(start_point, angle, length):
     if length < 5:
         return
     vector_0 = sd.get_vector(start_point=start_point, angle=angle, length=length)
-    vector_0.draw()
+    if length < 10:
+        vector_color = sd.COLOR_GREEN
+    else:
+        vector_color = (255, 255, 0)
+    vector_0.draw(color=vector_color)
     next_point = vector_0.end_point
     delta_angle = 30 + sd.random_number(0, 40) / 100
     delta_length = .75 + sd.random_number(-10, 10) / 100
@@ -59,7 +63,6 @@ def draw_snowflake(x, y, length, color=sd.COLOR_WHITE, factor_a=0.6, factor_b=0.
                  factor_a=factor_a,
                  factor_b=factor_b,
                  factor_c=factor_c)
-
 
 
 sd.pause()
