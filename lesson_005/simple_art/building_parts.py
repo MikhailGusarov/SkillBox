@@ -34,3 +34,8 @@ def draw_roof(start_point, length_grounds, angle, color=sd.COLOR_DARK_RED):
     point_2 = sd.get_point(start_point.x+length_grounds, start_point.y)
     point_3 = sd.get_point(start_point.x+length_grounds/2, start_point.y+length_grounds/2/sd.cos(angle))
     sd.polygon(point_list=[point_1, point_2, point_3], width=0, color=color)
+
+
+def draw_window(start_point, length):
+    sd.square(left_bottom=start_point, side=length, width=0, color=sd.background_color)
+    sd.square(left_bottom=start_point, side=length, width=1)
