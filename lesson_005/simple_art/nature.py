@@ -3,7 +3,7 @@
 import simple_draw as sd
 
 
-def rainbow(center_point, radius, width):
+def draw_rainbow(center_point, radius, width):
     """Draw rainbow"""
     if radius < width:
         print('Укажите радиус больше', width)
@@ -31,6 +31,35 @@ def draw_tree(start_point, angle, length):
     delta_angle = 30 + sd.random_number(0, 40) / 100
     delta_length = .75 + sd.random_number(-10, 10) / 100
     draw_branches(start_point=next_point, angle=angle - delta_angle, length=length * delta_length)
+
+
+def generate_snowflakes_data(x_start=0, x_end=sd.resolution[0],
+                             y_start=sd.resolution[1] - 50, y_end=sd.resolution[1] + 500):
+    """Generate random data for snowflake. x_start and x_end diapason asix x"""
+    x = sd.random_number(x_start, x_end)
+    y = sd.random_number(y_start, y_end)
+    length = sd.random_number(10, 40)
+    factor_a = sd.random_number(50, 70) / 100
+    factor_b = sd.random_number(25, 45) / 100
+    factor_c = sd.random_number(50, 70)
+    return {'x': x,
+            'y': y,
+            'length': length,
+            'factor_a': factor_a,
+            'factor_b': factor_b,
+            'factor_c': factor_c}
+
+
+def draw_snowflake(x, y, length, color=sd.COLOR_WHITE, factor_a=0.6, factor_b=0.35, factor_c=60):
+    """"""
+    point = sd.get_point(x, y)
+    sd.snowflake(center=point,
+                 length=length,
+                 color=color,
+                 factor_a=factor_a,
+                 factor_b=factor_b,
+                 factor_c=factor_c)
+
 
 
 sd.pause()
