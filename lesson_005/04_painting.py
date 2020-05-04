@@ -29,7 +29,7 @@ for _ in range(300):
 
 living_objects.draw_cow(start_point=sd.get_point(300, 100), length=100, width=200)
 
-sd.pause()
+
 
 # С помощью созданного пакета нарисовать эпохальное полотно "Утро в деревне".
 # На картине должны быть:
@@ -40,8 +40,42 @@ sd.pause()
 # пример см. lesson_005/results/04_painting.jpg
 # Приправить своей фантазией по вкусу (коты? коровы? люди? трактор? что придумается)
 
-# TODO здесь ваш код
+snowflakes = []
+for _ in range(20):
+    snowflakes.append(nature.generate_snowflakes_data(x_end=200, y_start=200, y_end=600))
+count = 0
+while True:
+    count += 1
+    for snowflake in snowflakes:
+        point = sd.get_point(snowflake['x'], snowflake['y'])
+        sd.snowflake(center=point,
+                     length=snowflake['length'],
+                     color=sd.background_color,
+                     factor_a=snowflake['factor_a'],
+                     factor_b=snowflake['factor_b'],
+                     factor_c=snowflake['factor_c'])
+        snowflake['y'] -= 10
+        snowflake['x'] += sd.random_number(-2, 2)
+        point = sd.get_point(snowflake['x'], snowflake['y'])
+        sd.snowflake(center=point,
+                     length=snowflake['length'],
+                     factor_a=snowflake['factor_a'],
+                     factor_b=snowflake['factor_b'],
+                     factor_c=snowflake['factor_c'])
+        if snowflake['y'] < 130:
+            snowflake['y'] = sd.random_number(sd.resolution[1] - 50, sd.resolution[1] + 300)
+    nature.draw_sun(center_point=sun_center, radius=80, length_sunbeam=70)
+    if count % 20 == 0:
+        sd.circle(sd.get_point(545, 175), radius=5, width=0, color=sd.COLOR_WHITE)
+        sd.line(sd.get_point(540, 175), sd.get_point(550, 175), color=sd.COLOR_BLACK)
+    sd.finish_drawing()
+    sd.sleep(0.1)
+    if count % 22 == 0:
+        sd.circle(sd.get_point(545, 175), radius=5, width=0, color=sd.COLOR_BLACK)
+    if sd.user_want_exit():
+        break
 
+sd.pause()
 # Усложненное задание (делать по желанию)
 # Анимировать картину.
 # Пусть слева идет снегопад, радуга переливается цветами, смайлик моргает, солнце крутит лучами, етс.
