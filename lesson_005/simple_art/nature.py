@@ -70,10 +70,6 @@ def draw_landscape(height):
     sd.rectangle(left_bottom=left_bottom, right_top=right_top, color=sd.COLOR_DARK_GREEN, width=0)
 
 
-def draw_hill(length):
-    pass
-
-
 def draw_sun(center_point, radius, length_sunbeam):
     sd.circle(center_position=center_point, radius=radius, color=sd.COLOR_YELLOW, width=0)
 
