@@ -22,19 +22,19 @@ def draw_tree(start_point, angle, length):
     """Draw tree with angle axic x = angle"""
     if length < 5:
         return
-    vector_0 = sd.get_vector(start_point=start_point, angle=angle, length=length)
+    vector_0 = sd.get_vector(start_point=start_point, angle=angle, length=length, width=3)
     if length < 10:
         vector_color = sd.COLOR_GREEN
     else:
-        vector_color = (255, 255, 0)
+        vector_color = sd.COLOR_DARK_ORANGE
     vector_0.draw(color=vector_color)
     next_point = vector_0.end_point
     delta_angle = 30 + sd.random_number(0, 40) / 100
     delta_length = .75 + sd.random_number(-10, 10) / 100
-    draw_branches(start_point=next_point, angle=angle + delta_angle, length=length * delta_length)
+    draw_tree(start_point=next_point, angle=angle + delta_angle, length=length * delta_length)
     delta_angle = 30 + sd.random_number(0, 40) / 100
     delta_length = .75 + sd.random_number(-10, 10) / 100
-    draw_branches(start_point=next_point, angle=angle - delta_angle, length=length * delta_length)
+    draw_tree(start_point=next_point, angle=angle - delta_angle, length=length * delta_length)
 
 
 def generate_snowflakes_data(x_start=0, x_end=sd.resolution[0],
@@ -55,7 +55,6 @@ def generate_snowflakes_data(x_start=0, x_end=sd.resolution[0],
 
 
 def draw_snowflake(x, y, length, color=sd.COLOR_WHITE, factor_a=0.6, factor_b=0.35, factor_c=60):
-    """"""
     point = sd.get_point(x, y)
     sd.snowflake(center=point,
                  length=length,
@@ -65,4 +64,55 @@ def draw_snowflake(x, y, length, color=sd.COLOR_WHITE, factor_a=0.6, factor_b=0.
                  factor_c=factor_c)
 
 
-sd.pause()
+def draw_landscape(height):
+    left_bottom = sd.get_point(0, 0)
+    right_top = sd.get_point(sd.resolution[0], height)
+    sd.rectangle(left_bottom=left_bottom, right_top=right_top, color=sd.COLOR_DARK_GREEN, width=0)
+
+
+def draw_hill(length):
+    pass
+
+
+def draw_sun(center_point, radius, length_sunbeam):
+    sd.circle(center_position=center_point, radius=radius, color=sd.COLOR_YELLOW, width=0)
+
+    start_point_line_1 = sd.get_point(center_point.x + radius + 10, center_point.y)
+    end_point_line_1 = sd.get_point(center_point.x + radius + 10 + length_sunbeam, center_point.y)
+    sd.line(start_point=start_point_line_1, end_point=end_point_line_1, color=sd.COLOR_YELLOW, width=3)
+
+    start_point_line_2 = sd.get_point(center_point.x - radius - 10, center_point.y)
+    end_point_line_2 = sd.get_point(center_point.x - radius - 10 - length_sunbeam, center_point.y)
+    sd.line(start_point=start_point_line_2, end_point=end_point_line_2, color=sd.COLOR_YELLOW, width=3)
+
+    start_point_line_3 = sd.get_point(center_point.x, center_point.y + radius + 10)
+    end_point_line_3 = sd.get_point(center_point.x, center_point.y + radius + 10 + length_sunbeam)
+    sd.line(start_point=start_point_line_3, end_point=end_point_line_3, color=sd.COLOR_YELLOW, width=3)
+
+    start_point_line_4 = sd.get_point(center_point.x, center_point.y - radius - 10)
+    end_point_line_4 = sd.get_point(center_point.x, center_point.y - radius - 10 - length_sunbeam)
+    sd.line(start_point=start_point_line_4, end_point=end_point_line_4, color=sd.COLOR_YELLOW, width=3)
+
+    start_point_line_5 = sd.get_point(center_point.x - 2*radius/3 - 10, center_point.y - 2*radius/3 - 10)
+    x = center_point.x - 2*radius/3 - length_sunbeam
+    y = center_point.y - 2*radius/3 - length_sunbeam
+    end_point_line_5 = sd.get_point(x, y)
+    sd.line(start_point=start_point_line_5, end_point=end_point_line_5, color=sd.COLOR_YELLOW, width=3)
+
+    start_point_line_6 = sd.get_point(center_point.x + 2 * radius / 3 + 10, center_point.y + 2 * radius / 3 + 10)
+    x = center_point.x + 2 * radius / 3 + length_sunbeam
+    y = center_point.y + 2 * radius / 3 + length_sunbeam
+    end_point_line_6 = sd.get_point(x, y)
+    sd.line(start_point=start_point_line_6, end_point=end_point_line_6, color=sd.COLOR_YELLOW, width=3)
+
+    start_point_line_7 = sd.get_point(center_point.x - 2 * radius / 3 - 10, center_point.y + 2 * radius / 3 + 10)
+    x = center_point.x - 2 * radius / 3 - length_sunbeam
+    y = center_point.y + 2 * radius / 3 + length_sunbeam
+    end_point_line_7 = sd.get_point(x, y)
+    sd.line(start_point=start_point_line_7, end_point=end_point_line_7, color=sd.COLOR_YELLOW, width=3)
+
+    start_point_line_8 = sd.get_point(center_point.x + 2 * radius / 3 + 10, center_point.y - 2 * radius / 3 - 10)
+    x = center_point.x + 2 * radius / 3 + length_sunbeam
+    y = center_point.y - 2 * radius / 3 - length_sunbeam
+    end_point_line_8 = sd.get_point(x, y)
+    sd.line(start_point=start_point_line_8, end_point=end_point_line_8, color=sd.COLOR_YELLOW, width=3)
