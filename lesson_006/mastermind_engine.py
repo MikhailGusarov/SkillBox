@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from random import randint
+from termcolor import cprint
 
 SECRET_NUMBER = ''
 _count_steps = 0
@@ -42,18 +43,18 @@ def get_count_steps():
 def check_input(user_number):
     """Проверка ввода пчисла пользователя"""
     if len(user_number) != 4:
-        print('Число должно быть четырехзначным!')
+        cprint('Число должно быть четырехзначным!', color='red')
         return False
     if user_number.isdigit() is False:
-        print('Вы должны ввести число!')
+        cprint('Вы должны ввести число!', color='red')
         return False
     if user_number[0] == '0':
-        print('Первая цифра не должна быть равна 0')
+        cprint('Первая цифра не должна быть равна 0', color='red')
         return False
     for i, symbol in enumerate(user_number):
         if i+1 == len(user_number):
             continue
         if symbol in user_number[i+1:]:
-            print('Нельзя вводить одинаковые значения')
+            cprint('Нельзя вводить одинаковые значения', color='red')
             return False
     return True

@@ -44,18 +44,18 @@
 # Точнее, в этом случае важен принцип единственной ответственности - https://goo.gl/rYb3hT
 
 from mastermind_engine import make_number, check_number, get_count_steps, SECRET_NUMBER
-
+from termcolor import cprint, colored
 make_number()
 
 while True:
-    user_number = input('Введите четырехзначное число > ')
+    user_number = input(colored('Введите четырехзначное число > ', color='green', attrs=['underline']))
     result = check_number(user_number=user_number)
     if result is None:
         continue
-    print('быки - {}, коровы - {}'.format(result['bulls'], result['cows']))
+    cprint('быки - {}, коровы - {}'.format(result['bulls'], result['cows']), color="yellow")
     if result['bulls'] == 4:
-        print('Вы выиграли за {} шагов'.format(get_count_steps()))
-        play_again = input('Хотите сыграть ещё? y//n > ')
+        cprint('Вы выиграли за {} шагов'.format(get_count_steps()), attrs=['bold'])
+        play_again = input(colored('Хотите сыграть ещё? y//n > ', color='green', attrs=['underline']))
         if play_again == 'n':
             break
         else:
