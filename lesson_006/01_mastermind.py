@@ -50,6 +50,8 @@ make_number()
 while True:
     user_number = input('Введите четырехзначное число > ')
     result = check_number(user_number=user_number)
+    if result is None:
+        continue
     print('быки - {}, коровы - {}'.format(result['bulls'], result['cows']))
     if result['bulls'] == 4:
         print('Вы выиграли за {} шагов'.format(get_count_steps()))
