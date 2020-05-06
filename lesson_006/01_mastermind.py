@@ -43,4 +43,19 @@
 # Это пример применения SOLID принципа (см https://goo.gl/GFMoaI) в архитектуре программ.
 # Точнее, в этом случае важен принцип единственной ответственности - https://goo.gl/rYb3hT
 
-# TODO здесь ваш код...
+from mastermind_engine import make_number, check_number, get_count_steps, SECRET_NUMBER
+
+make_number()
+
+while True:
+    user_number = input('Введите четырехзначное число > ')
+    result = check_number(user_number=user_number)
+    print('быки - {}, коровы - {}'.format(result['bulls'], result['cows']))
+    if result['bulls'] == 4:
+        print('Вы выиграли за {} шагов'.format(get_count_steps()))
+        play_again = input('Хотите сыграть ещё? y//n > ')
+        if play_again == 'n':
+            break
+        else:
+            make_number()
+
