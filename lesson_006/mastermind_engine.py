@@ -5,7 +5,7 @@ _count_steps = 0
 
 
 def make_number():
-    global SECRET_NUMBER,  _count_steps
+    global SECRET_NUMBER, _count_steps
     SECRET_NUMBER = ''
     _count_steps = 0
     while len(SECRET_NUMBER) < 4:
@@ -28,8 +28,6 @@ def check_number(user_number):
             elif symbol in SECRET_NUMBER:
                 bulls_and_cows['cows'] += 1
         return bulls_and_cows
-    else:
-        print('Данные введены некорректно')
 
 
 def get_count_steps():
@@ -37,5 +35,19 @@ def get_count_steps():
 
 
 def check_input(user_number):
-    # TODO написать функцию проверки
+    if len(user_number) != 4:
+        print('Число должно быть четырехзначным!')
+        return False
+    if user_number.isdigit() is False:
+        print('Вы должны ввести число!')
+        return False
+    if user_number[0] == '0':
+        print('Первая цифра не должна быть равна 0')
+        return False
+    for i, symbol in enumerate(user_number):
+        if i+1 == len(user_number):
+            continue
+        if symbol in user_number[i+1:]:
+            print('Нельзя вводить одинаковые значения')
+            return False
     return True
