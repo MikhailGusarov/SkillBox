@@ -5,6 +5,7 @@ _count_steps = 0
 
 
 def make_number():
+    """Сгенерировать число и обнулить результат"""
     global SECRET_NUMBER, _count_steps
     SECRET_NUMBER = ''
     _count_steps = 0
@@ -18,6 +19,7 @@ def make_number():
 
 
 def check_number(user_number):
+    """проверка числа на соответсвие SECRET_NUMBER"""
     if check_input(user_number):
         bulls_and_cows = {'bulls': 0, 'cows': 0}
         global _count_steps
@@ -31,10 +33,12 @@ def check_number(user_number):
 
 
 def get_count_steps():
+    """Функция возвращает кол-во шагов"""
     return _count_steps
 
 
 def check_input(user_number):
+    """Проверка ввода пчисла пользователя"""
     if len(user_number) != 4:
         print('Число должно быть четырехзначным!')
         return False
