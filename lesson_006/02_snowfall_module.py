@@ -19,7 +19,7 @@ create_snowflakes(N)
 while True:
     draw_snowflakes(color=sd.background_color)
     move_down()
-    draw_snowflakes(color)
+    draw_snowflakes()
     reached_bottom = get_reached_bottom()
     if reached_bottom:
         count_reached_bottom = len(reached_bottom)
