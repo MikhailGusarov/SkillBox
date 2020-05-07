@@ -25,7 +25,7 @@ while True:
         count_reached_bottom = len(reached_bottom)
         delete_snowflakes(reached_bottom)
         create_snowflakes(count_reached_bottom)
-    sd.sleep(0.1)
+    sd.sleep(0.3)
     if sd.user_want_exit():
         break
 
