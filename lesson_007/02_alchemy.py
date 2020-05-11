@@ -20,6 +20,23 @@
 #   print(Fire(), '+', Air(), '=', Fire() + Air())
 
 
+class Magic:
+    def __str__(self):
+        return 'Щепоточка магии'
+
+    def __add__(self, other):
+        if isinstance(other, Magic):
+            return FlyingKoala()
+        elif isinstance(other, Water):
+            return Beer()
+        elif isinstance(other, Fire):
+            return Dragon()
+        elif isinstance(other, Soil):
+            return Golem()
+        elif isinstance(other, Dust):
+            return StarDust()
+
+
 class Water:
     def __str__(self):
         return 'Вода'
@@ -33,6 +50,8 @@ class Water:
             return Steam()
         elif isinstance(other, Soil):
             return Dirt()
+        elif isinstance(other, Magic):
+            return Beer()
 
 
 class Air:
@@ -63,6 +82,8 @@ class Fire:
             return Lava()
         elif isinstance(other, Fire):
             return Fire()
+        elif isinstance(other, Magic):
+            return Dragon()
 
 
 class Soil:
@@ -78,6 +99,8 @@ class Soil:
             return Lava()
         elif isinstance(other, Soil):
             return Soil
+        elif isinstance(other, Magic):
+            return Golem()
 
 
 class Storm:
@@ -123,6 +146,8 @@ class Dust:
     def __add__(self, other):
         if isinstance(other, Dust):
             return Dust
+        elif isinstance(other, Magic):
+            return StarDust()
 
 
 class Lava:
@@ -134,8 +159,35 @@ class Lava:
             return Lava
 
 
+class FlyingKoala:
+    def __str__(self):
+        return 'Летающая коала'
+
+
+class Beer:
+    def __str__(self):
+        return 'Пивко'
+
+
+class Dragon:
+    def __str__(self):
+        return 'Дракон'
+
+
+class Golem:
+    def __str__(self):
+        return 'Голем'
+
+
+class StarDust:
+    def __str__(self):
+        return 'Звездная пыль'
+
+
 print(Water(), '+', Air(), '=', Water() + Air())
 print(Fire(), '+', Air(), '=', Fire() + Air())
+print(Fire(), '+', Magic(), '=', Fire() + Magic())
+print(Magic(), '+', Water(), '=', Magic() + Water())
 # Усложненное задание (делать по желанию)
 # Добавить еще элемент в игру.
 # Придумать что будет при сложении существующих элементов с новым.
