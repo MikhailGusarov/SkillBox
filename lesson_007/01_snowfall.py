@@ -24,7 +24,7 @@ class Snowflake:
 
     def move(self):
         """ сдивинуть снежинку"""
-        self.y -= 15
+        self.y -= 10
 
     def draw(self, color=sd.COLOR_WHITE):
         """ нарисовать снежинку"""
@@ -36,34 +36,56 @@ class Snowflake:
                      factor_c=self.factor_c)
 
     def can_fall(self):
-        """ снежинка может падать ниже?"""
+        """ снежинка может падать ниже? """
         return self.y > 0
 
+    def __del__(self):
+        self.clear_previous_picture()
 
-flake = Snowflake()
 
-while True:
-    flake.clear_previous_picture()
-    flake.move()
-    flake.draw()
-    if not flake.can_fall():
-        break
-    sd.sleep(0.1)
-    if sd.user_want_exit():
-        break
+# flake = Snowflake()
 
-# шаг 2: создать снегопад - список объектов Снежинка в отдельном списке, обработку примерно так:
-# flakes = get_flakes(count=N)  # создать список снежинок
 # while True:
-#     for flake in flakes:
-#         flake.clear_previous_picture()
-#         flake.move()
-#         flake.draw()
-#     fallen_flakes = get_fallen_flakes()  # подчитать сколько снежинок уже упало
-#     if fallen_flakes:
-#         append_flakes(count=fallen_flakes)  # добавить еще сверху
+#     flake.clear_previous_picture()
+#     flake.move()
+#     flake.draw()
+#     if not flake.can_fall():
+#         break
 #     sd.sleep(0.1)
 #     if sd.user_want_exit():
 #         break
+
+
+def get_flakes(count_snowflakes, y1=0, y2=sd.resolution[1]):
+    """ Генератор снеджинок, где count_snowflakes = кол-во снежинок"""
+    snowflakes = []
+    for _ in range(count_snowflakes):
+        x = sd.random_number(0, sd.resolution[0])
+        y = sd.random_number(y1, y2)
+        length = sd.random_number(10, 40)
+        factor_a = sd.random_number(50, 70) / 100
+        factor_b = sd.random_number(25, 45) / 100
+        factor_c = sd.random_number(50, 70)
+        snowflake = Snowflake(x=x, y=y, length=length, factor_a=factor_a, factor_b=factor_b, factor_c=factor_c)
+        snowflakes.append(snowflake)
+    return snowflakes
+
+
+flakes = get_flakes(count_snowflakes=30)  # создать список снежинок
+while True:
+    flakes_on_del = []
+    for flake in flakes:
+        flake.clear_previous_picture()
+        flake.move()
+        flake.draw()
+        if not flake.can_fall():
+            flakes_on_del.append(flake)
+    if flakes_on_del:
+        flakes += get_flakes(count_snowflakes=len(flakes_on_del), y1=sd.resolution[1])  # добавить еще сверху
+    for flake in flakes_on_del:
+        flakes.remove(flake)
+    sd.sleep(0.1)
+    if sd.user_want_exit():
+        break
 
 sd.pause()
