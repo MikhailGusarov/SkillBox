@@ -9,9 +9,35 @@ import simple_draw as sd
 
 
 class Snowflake:
-    pass
+    def __init__(self, x=sd.randint(0, sd.resolution[0]), y=sd.resolution[1],
+                 length=100, factor_a=0.6, factor_b=0.35, factor_c=60):
+        self.x = x
+        self.y = y
+        self.length = length
+        self.factor_a = factor_a
+        self.factor_b = factor_b
+        self.factor_c = factor_c
 
-    # TODO здесь ваш код
+    def clear_previous_picture(self):
+        """ Очистить предыдущее значение снежинки с экрана"""
+        self.draw(color=sd.background_color)
+
+    def move(self):
+        """ сдивинуть снежинку"""
+        self.y -= 15
+
+    def draw(self, color=sd.COLOR_WHITE):
+        """ нарисовать снежинку"""
+        sd.snowflake(center=sd.get_point(self.x, self.y),
+                     length=self.length,
+                     color=color,
+                     factor_a=self.factor_a,
+                     factor_b=self.factor_b,
+                     factor_c=self.factor_c)
+
+    def can_fall(self):
+        """ снежинка может падать ниже?"""
+        return self.y > 0
 
 
 flake = Snowflake()
