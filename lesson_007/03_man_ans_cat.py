@@ -50,12 +50,16 @@ class Man:
             cprint('{} умер...'.format(self.name), color='red')
             return
         dice = randint(1, 6)
-        if self.fullness < 20:
+        if self.fullness <= 20:
             self.eat()
-        elif self.house.food < 10:
+        elif self.house.food <= 10:
             self.shopping()
         elif self.house.money < 50:
             self.work()
+        elif self.house.cat_food < 10:
+            self.shopping_in_pet_shop()
+        elif self.house.mud > 100:
+            self.cleaning()
         elif dice == 1:
             self.work()
         elif dice == 2:
@@ -101,27 +105,27 @@ class Cat:
     def __init__(self, name):
         self.name = name
         self.house = None
-        self.fullness = 0
+        self.fullness = 50
 
     def __str__(self):
         return 'Я - {}, сытость {}'.format(self.name, self.fullness)
 
     def sleep(self):
         self.fullness -= 10
-        cprint('{} пошел спать'.format(self.name))
+        cprint('{} пошел спать'.format(self.name), color='blue')
 
     def eat(self):
         if self.house.cat_food >= 10:
             self.fullness += 20
             self.house.cat_food -= 10
-            cprint('{} поел'.format(self.name))
+            cprint('{} поел'.format(self.name), color='cyan')
         else:
             cprint('{} нет кошачей еды'.format(self.name), color='red')
 
     def tear_wallpaper(self):
         self.fullness -= 10
         self.house.mud += 5
-        cprint('{} подрал обои'.format(self.name))
+        cprint('{} подрал обои'.format(self.name), color='green')
 
     def act(self):
         if self.fullness <= 0:
@@ -173,7 +177,7 @@ my_sweet_home = House()
 # for citizen in citizens:
 citizen.go_to_the_house(house=my_sweet_home)
 citizen.pick_up_cat(cat=cat)
-for day in range(1, 10):
+for day in range(1, 365):
     print('================ день {} =================='.format(day))
     citizen.act()
     cat.act()
