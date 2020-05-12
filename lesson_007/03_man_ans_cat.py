@@ -172,19 +172,22 @@ class Cat:
 
 
 citizen = Man(name='Бивис')
-cat = Cat(name='Мурзик')
+cats = [Cat(name='Мурзик'), Cat(name='Рижий'), Cat(name='Белый ходок')]
 my_sweet_home = House()
 # for citizen in citizens:
 citizen.go_to_the_house(house=my_sweet_home)
-citizen.pick_up_cat(cat=cat)
+for cat in cats:
+    citizen.pick_up_cat(cat=cat)
 for day in range(1, 365):
     print('================ день {} =================='.format(day))
     citizen.act()
-    cat.act()
+    for cat in cats:
+        cat.act()
 
     print('--- в конце дня ---')
     print(citizen)
-    print(cat)
+    for cat in cats:
+        print(cat)
     print(my_sweet_home)
 
 
