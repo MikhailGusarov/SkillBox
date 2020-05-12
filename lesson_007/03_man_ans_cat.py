@@ -93,14 +93,49 @@ class House:
         self.mud = 0
 
     def __str__(self):
-        return 'В доме еды осталось {}, денег осталось {}'.format(
-            self.food, self.money)
+        return 'В доме еды осталось {}, денег осталось {}, кошачей еды осталось {}, грази {}'.format(
+            self.food, self.money, self.cat_food, self.mud)
 
 
 class Cat:
-    def __init__(self):
+    def __init__(self, name):
+        self.name = name
         self.house = None
         self.fullness = 0
+
+    def __str__(self):
+        return 'Я - {}, сытость {}'.format(self.name, self.fullness)
+
+    def sleep(self):
+        self.fullness -= 10
+        cprint('{} пошел спать'.format(self.name))
+
+    def eat(self):
+        if self.house.cat_food >= 10:
+            self.fullness += 20
+            self.house.cat_food -= 10
+            cprint('{} поел'.format(self.name))
+        else:
+            cprint('{} нет кошачей еды'.format(self.name), color='red')
+
+    def tear_wallpaper(self):
+        self.fullness -= 10
+        self.house.mud += 5
+        cprint('{} подрал обои'.format(self.name))
+
+    def act(self):
+        if self.fullness <= 0:
+            cprint('{} умер...'.format(self.name), color='red')
+            return
+        dice = randint(1, 6)
+        if self.fullness < 20:
+            self.eat()
+        elif dice < 3:
+            self.sleep()
+        elif dice == 3:
+            self.eat()
+        else:
+            self.tear_wallpaper()
 
 # Доработать практическую часть урока lesson_007/python_snippets/08_practice.py
 
@@ -115,39 +150,39 @@ class Cat:
 #   убраться в доме - степень грязи в доме уменьшается на 100, сытость у человека уменьшается на 20. +
 # Увеличить кол-во зарабатываемых человеком денег до 150 (он выучил пайтон и устроился на хорошую работу :) +
 
-# Кот может есть, спать и драть обои - необходимо реализовать соответствующие методы.
-# Когда кот спит - сытость уменьшается на 10
-# Когда кот ест - сытость увеличивается на 20, кошачья еда в доме уменьшается на 10.
-# Когда кот дерет обои - сытость уменьшается на 10, степень грязи в доме увеличивается на 5
-# Если степень сытости < 0, кот умирает.
-# Так же надо реализовать метод "действуй" для кота, в котором он принимает решение
-# что будет делать сегодня
+# Кот может есть, спать и драть обои - необходимо реализовать соответствующие методы. +
+# Когда кот спит - сытость уменьшается на 10 +
+# Когда кот ест - сытость увеличивается на 20, кошачья еда в доме уменьшается на 10. +
+# Когда кот дерет обои - сытость уменьшается на 10, степень грязи в доме увеличивается на 5 +
+# Если степень сытости < 0, кот умирает. +
+# Так же надо реализовать метод "действуй" для кота, в котором он принимает решение +
+# что будет делать сегодня +
 
 # Человеку и коту надо вместе прожить 365 дней.
 
-citizens = [
-    Man(name='Бивис'),
-    Man(name='Батхед'),
-    Man(name='Кенни'),
-]
+# citizens = [
+#     Man(name='Бивис'),
+#     Man(name='Батхед'),
+#     Man(name='Кенни'),
+# ]
 
 
+citizen = Man(name='Бивис')
+cat = Cat(name='Мурзик')
 my_sweet_home = House()
-for citisen in citizens:
-    citisen.go_to_the_house(house=my_sweet_home)
-
-for day in range(1, 366):
+# for citizen in citizens:
+citizen.go_to_the_house(house=my_sweet_home)
+citizen.pick_up_cat(cat=cat)
+for day in range(1, 10):
     print('================ день {} =================='.format(day))
-    for citisen in citizens:
-        citisen.act()
+    citizen.act()
+    cat.act()
+
     print('--- в конце дня ---')
-    for citisen in citizens:
-        print(citisen)
+    print(citizen)
+    print(cat)
     print(my_sweet_home)
 
-noname_cat = Cat()
-citizens[0].pick_up_cat(noname_cat)
-print(noname_cat.house)
 
 # Усложненное задание (делать по желанию)
 # Создать несколько (2-3) котов и подселить их в дом к человеку.
