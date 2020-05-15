@@ -72,15 +72,15 @@ class Human:
             return '{} умер'.format(self.name)
         return 'У {} сытость {}, степень счастья {}'.format(self.name, self.fullness, self.happiness)
 
-    def eat(self):
+    def eat(self, max_eat=30):
         if self.house.eat == 0:
             cprint('{}: Еды нет!'.format(self.name), color='red')
             self.fullness -= 10
             if self.fullness <= 0:
                 self.die = True
                 return
-        if self.house.eat > 30:
-            eat = 30
+        if self.house.eat > max_eat:
+            eat = max_eat
         else:
             eat = self.house.eat
         self.fullness += eat
@@ -96,8 +96,6 @@ class Human:
         if self.die:
             cprint('{} умер'.format(self.name), color='red')
             return False
-        if self.house.mud > 90:
-            self.happiness -= 5
         if self.happiness < 10:
             self.die = True
             cprint('{} умер от горя'.format(self.name), color='red')
@@ -109,6 +107,8 @@ class Husband(Human):
 
     def act(self):
         if super().act():
+            if self.house.mud > 90:
+                self.happiness -= 5
             if self.fullness <= 30:
                 self.eat()
             elif self.house.money < 300:
@@ -143,6 +143,8 @@ class Wife(Human):
 
     def act(self):
         if super().act():
+            if self.house.mud > 90:
+                self.happiness -= 5
             if self.fullness <= 30:
                 self.eat()
             elif self.house.eat < 350:
@@ -197,19 +199,45 @@ class Wife(Human):
         cprint('{} убралась дома'.format(self.name), color='magenta')
 
 
+class Child(Human):
+    def act(self):
+        if super().act():
+            if self.fullness < 30:
+                self.eat()
+            else:
+                dice = randint(0, 3)
+                if dice:
+                    self.sleep()
+                else:
+                    self.eat()
+
+    def eat(self, max_eat=10):
+        res = super().eat(max_eat=max_eat)
+        if res:
+            cprint(res, color='white', attrs=['bold'])
+
+    def sleep(self):
+        self.fullness -= 10
+        cprint('{} спит'.format(self.name), color='white', attrs=['bold'])
+
+
 home = House()
 serge = Husband(name='Сережа')
 masha = Wife(name='Маша')
+lev = Child(name='Лев')
 serge.go_to_the_house(home)
 masha.go_to_the_house(home)
+lev.go_to_the_house(home)
 
 for day in range(365):
     cprint('================== День {} =================='.format(day), color='red')
     serge.act()
     masha.act()
+    lev.act()
     home.get_mud()
     cprint(serge, color='cyan')
     cprint(masha, color='cyan')
+    cprint(lev, color='cyan')
     cprint(home, color='cyan')
 
 
@@ -263,34 +291,15 @@ cprint('Куплено шуб {}'.format(Human.bought_coat), color='yellow')
 
 ######################################################## Часть вторая бис
 #
-# После реализации первой части надо в ветке мастер продолжить работу над семьей - добавить ребенка
+# После реализации первой части надо в ветке мастер продолжить работу над семьей - добавить ребенка +
 #
-# Ребенок может:
-#   есть,
-#   спать,
+# Ребенок может: +
+#   есть, +
+#   спать, +
 #
-# отличия от взрослых - кушает максимум 10 единиц еды,
-# степень счастья  - не меняется, всегда ==100 ;)
+# отличия от взрослых - кушает максимум 10 единиц еды, +
+# степень счастья  - не меняется, всегда ==100 ;) +
 
-# class Child:
-#
-#     def __init__(self):
-#         pass
-#
-#     def __str__(self):
-#         return super().__str__()
-#
-#     def act(self):
-#         pass
-#
-#     def eat(self):
-#         pass
-#
-#     def sleep(self):
-#         pass
-
-
-# TODO после реализации второй части - отдать на проверку учителем две ветки
 
 
 ######################################################## Часть третья
