@@ -85,8 +85,8 @@ class Human:
             eat = self.house.eat
         self.fullness += eat
         self.house.eat -= eat
-        print('{} съел {} еды'.format(self.name, eat))
         Human.eaten_food += eat
+        return '{} съел {} еды'.format(self.name, eat)
 
     def go_to_the_house(self, house):
         self.house = house
@@ -122,6 +122,11 @@ class Husband(Human):
                 else:
                     self.gaming()
 
+    def eat(self):
+        res = super().eat()
+        if res:
+            cprint(res, color='blue')
+
     def work(self):
         self.fullness -= 10
         self.house.money += 150
@@ -154,6 +159,11 @@ class Wife(Human):
                     self.clean_house()
                 else:
                     self.buy_fur_coat()
+
+    def eat(self):
+        res = super().eat()
+        if res:
+            cprint(res, color='magenta')
 
     def shopping(self):
         self.fullness -= 10
