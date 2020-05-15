@@ -72,7 +72,7 @@ class Man:
             cat.house = self.house
             cprint('{} подобрал кота.'.format(self.name), color='yellow')
         else:
-            cprint('У {}а нет дома, чтобы подобрать кота'.format(self.name), color='red')
+            cprint('У {} а нет дома, чтобы подобрать кота'.format(self.name), color='red')
 
     def shopping_in_pet_shop(self):
         if self.house.money >= 50:
