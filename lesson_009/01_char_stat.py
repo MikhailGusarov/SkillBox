@@ -21,7 +21,62 @@
 # Упорядочивание по частоте - по убыванию. Ширину таблицы подберите по своему вкусу
 # Требования к коду: он должен быть готовым к расширению функциональности. Делать сразу на классах.
 
-# TODO здесь ваш код
+import zipfile
+from pprint import pprint
+from os.path import join, normpath, dirname
+
+
+class StaticChars:
+    file_name = None
+
+    def __init__(self, path):
+        self.file_path = normpath(path)
+        self.stat = {}
+        self.stat_for_print = []
+        self.all_count_char = 0
+
+    def unzip(self, file_zip_path):
+        file_zip = zipfile.ZipFile(file_zip_path)
+        for filename in file_zip.namelist():
+            file_zip.extract(filename)
+            self.file_path = filename
+
+    def collect(self):
+        if self.file_path.endswith('.zip'):
+            self.unzip(self.file_path)
+        with open(self.file_path, encoding='cp1251') as file:
+            for line in file:
+                for ch in line:
+                    if ch.isalpha():
+                        if ch in self.stat:
+                            self.stat[ch] += 1
+                        else:
+                            self.stat[ch] = 1
+
+    def prepare(self):
+        self.stat_for_print = []
+        self.all_count_char = 0
+        for ch, count in self.stat.items():
+            self.stat_for_print.append([count, ch])
+            self.all_count_char += count
+        self.stat_for_print.sort(reverse=True)
+
+    def print_stat(self):
+        print('+---------+----------+')
+        print('|  буква  | частота  |')
+        print('+---------+----------+')
+        for ch in self.stat_for_print:
+            print(f'|{ch[1]:^9}|{ch[0]:^10}|')
+        print('+---------+----------+')
+        print(f'|  итого  |{self.all_count_char:^10}|')
+        print('+---------+----------+')
+
+
+file_zip_path = join('python_snippets', 'voyna-i-mir.txt.zip')
+stat = StaticChars(file_zip_path)
+stat.collect()
+stat.prepare()
+stat.print_stat()
 
 # После выполнения первого этапа нужно сделать упорядочивание статистики
 #  - по частоте по возрастанию
