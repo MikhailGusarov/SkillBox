@@ -103,6 +103,9 @@ class StaticCharAlphabetReverse(StaticCharReverse):
             print(f'|{ch:^9}|{count:^10}|')
 
 
+class StaticCharAlphabet(StaticCharAlphabetReverse):
+    def sort_stat(self):
+        self.stat_for_print.sort(reverse=True)
 
 # После выполнения первого этапа нужно сделать упорядочивание статистики
 #  - по частоте по возрастанию
@@ -111,7 +114,6 @@ class StaticCharAlphabetReverse(StaticCharReverse):
 # Для этого пригодится шаблон проектирование "Шаблонный метод" см https://goo.gl/Vz4828
 
 
-
 file_zip_path = join('python_snippets', 'voyna-i-mir.txt.zip')
-stat = StaticCharAlphabetReverse(file_zip_path)
+stat = StaticCharAlphabet(file_zip_path)
 stat.run_and_print()
