@@ -46,12 +46,15 @@ class StaticChars:
             self.unzip(self.file_path)
         with open(self.file_path, encoding='cp1251') as file:
             for line in file:
-                for ch in line:
-                    if ch.isalpha():
-                        if ch in self.stat:
-                            self.stat[ch] += 1
-                        else:
-                            self.stat[ch] = 1
+                self._collect_in_line(line)
+
+    def _collect_in_line(self, line):
+        for ch in line:
+            if ch.isalpha():
+                if ch in self.stat:
+                    self.stat[ch] += 1
+                else:
+                    self.stat[ch] = 1
 
     def prepare(self):
         self.stat_for_print = []
@@ -59,7 +62,6 @@ class StaticChars:
         for ch, count in self.stat.items():
             self.stat_for_print.append([count, ch])
             self.all_count_char += count
-        self.stat_for_print.sort(reverse=True)
 
     def print_stat(self):
         print('+---------+----------+')
@@ -71,12 +73,19 @@ class StaticChars:
         print(f'|  итого  |{self.all_count_char:^10}|')
         print('+---------+----------+')
 
+    def sort_stat(self):
+        self.stat_for_print.sort(reverse=True)
+
+    def run_and_print(self):
+        self.collect()
+        self.prepare()
+        self.sort_stat()
+        self.print_stat()
+
 
 file_zip_path = join('python_snippets', 'voyna-i-mir.txt.zip')
 stat = StaticChars(file_zip_path)
-stat.collect()
-stat.prepare()
-stat.print_stat()
+stat.run_and_print()
 
 # После выполнения первого этапа нужно сделать упорядочивание статистики
 #  - по частоте по возрастанию
