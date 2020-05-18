@@ -83,12 +83,19 @@ class StaticChars:
         self.print_stat()
 
 
-file_zip_path = join('python_snippets', 'voyna-i-mir.txt.zip')
-stat = StaticChars(file_zip_path)
-stat.run_and_print()
+class StaticCharReverse(StaticChars):
+    def sort_stat(self):
+        self.stat_for_print.sort()
+
 
 # После выполнения первого этапа нужно сделать упорядочивание статистики
 #  - по частоте по возрастанию
 #  - по алфавиту по возрастанию
 #  - по алфавиту по убыванию
 # Для этого пригодится шаблон проектирование "Шаблонный метод" см https://goo.gl/Vz4828
+
+
+
+file_zip_path = join('python_snippets', 'voyna-i-mir.txt.zip')
+stat = StaticCharReverse(file_zip_path)
+stat.run_and_print()
