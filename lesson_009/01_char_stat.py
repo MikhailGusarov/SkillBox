@@ -60,18 +60,24 @@ class StaticChars:
         self.stat_for_print = []
         self.all_count_char = 0
         for ch, count in self.stat.items():
-            self.stat_for_print.append([count, ch])
+            self._prepare_append(ch, count)
             self.all_count_char += count
+
+    def _prepare_append(self, ch, count):
+        self.stat_for_print.append([count, ch])
 
     def print_stat(self):
         print('+---------+----------+')
         print('|  буква  | частота  |')
         print('+---------+----------+')
-        for ch in self.stat_for_print:
-            print(f'|{ch[1]:^9}|{ch[0]:^10}|')
+        self._print_stat_body()
         print('+---------+----------+')
         print(f'|  итого  |{self.all_count_char:^10}|')
         print('+---------+----------+')
+
+    def _print_stat_body(self):
+        for count, ch in self.stat_for_print:
+            print(f'|{ch:^9}|{count:^10}|')
 
     def sort_stat(self):
         self.stat_for_print.sort(reverse=True)
@@ -88,6 +94,16 @@ class StaticCharReverse(StaticChars):
         self.stat_for_print.sort()
 
 
+class StaticCharAlphabetReverse(StaticCharReverse):
+    def _prepare_append(self, ch, count):
+        self.stat_for_print.append([ch, count])
+
+    def _print_stat_body(self):
+        for ch, count in self.stat_for_print:
+            print(f'|{ch:^9}|{count:^10}|')
+
+
+
 # После выполнения первого этапа нужно сделать упорядочивание статистики
 #  - по частоте по возрастанию
 #  - по алфавиту по возрастанию
@@ -97,5 +113,5 @@ class StaticCharReverse(StaticChars):
 
 
 file_zip_path = join('python_snippets', 'voyna-i-mir.txt.zip')
-stat = StaticCharReverse(file_zip_path)
+stat = StaticCharAlphabetReverse(file_zip_path)
 stat.run_and_print()
