@@ -18,8 +18,6 @@
 #
 # Входные параметры: файл для анализа, файл результата
 # Требования к коду: он должен быть готовым к расширению функциональности. Делать сразу на классах.
-from pprint import pprint
-
 
 class LogParser:
     answer_event = 'NOK'
@@ -41,7 +39,7 @@ class LogParser:
 
     def _parse_line(self, line):
         if line.endswith(self.answer_event + '\n'):
-            datetime = line[1:20]
+            datetime = self.cut_datetime(line)
             if datetime in self.res_parse:
                 self.res_parse[datetime] += 1
             else:
@@ -52,10 +50,32 @@ class LogParser:
             for datetime, count in self.res_parse.items():
                 file.write('[{}] {}\n'.format(datetime, count))
 
+    @staticmethod
+    def cut_datetime(line):
+        return line[1:20]
+
+
+class LogParserForHour(LogParser):
+    @staticmethod
+    def cut_datetime(line):
+        return line[1:14]
+
+
+class LogParserForMonth(LogParser):
+    @staticmethod
+    def cut_datetime(line):
+        return line[1:8]
+
+
+class LogParserForYear(LogParser):
+    @staticmethod
+    def cut_datetime(line):
+        return line[1:5]
+
 
 log_file = 'events.txt'
 result_file = 'res.txt'
-parse = LogParser(log_file=log_file, result_file=result_file)
+parse = LogParserForYear(log_file=log_file, result_file=result_file)
 parse.run()
 # После выполнения первого этапа нужно сделать группировку событий
 #  - по часам
