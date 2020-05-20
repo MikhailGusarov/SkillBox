@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import os, time, shutil
+import os
+import time
+import shutil
 
 # Нужно написать скрипт для упорядочивания фотографий (вообще любых файлов)
 # Скрипт должен разложить файлы из одной папки по годам и месяцам в другую.
@@ -33,8 +35,49 @@ import os, time, shutil
 #
 # Чтение документации/гугла по функциям - приветствуется. Как и поиск альтернативных вариантов :)
 # Требования к коду: он должен быть готовым к расширению функциональности. Делать сразу на классах.
+from pprint import pprint
 
-# TODO здесь ваш код
+
+class GrouperFiles:
+
+    def __init__(self, source_directory, result_directory):
+        self.source_directory = source_directory
+        self.result_directory = result_directory
+        self.files = []
+
+    def run(self):
+        self.files = {}
+        content_source_dir = os.walk(self.source_directory)
+        for content_dir in content_source_dir:
+            for file_name in content_dir[2]:
+                full_path_to_file = os.path.join(content_dir[0], file_name)
+                datetime_file = time.gmtime(os.path.getmtime(full_path_to_file))
+                year_file = datetime_file.tm_year
+                month_file = datetime_file.tm_mon
+                if year_file in self.files:
+                    if month_file in self.files[year_file]:
+                        self.files[year_file][month_file].append([content_dir[0], file_name])
+                    else:
+                        self.files[year_file][month_file] = [[content_dir[0], file_name]]
+                else:
+                    self.files[year_file] = {month_file: [[content_dir[0], file_name]]}
+
+        for year, year_folder in self.files.items():
+            for month, month_folder in year_folder.items():
+                path_folder = os.path.join(self.result_directory, str(year), str(month))
+
+                if not os.path.exists(path_folder):
+                    os.makedirs(path_folder)
+
+                for folder, file in month_folder:
+                    path_file = os.path.join(folder, file)
+                    shutil.copy2(path_file, path_folder)
+
+
+source_folder = 'icons'
+result_folder = 'icons_by_year'
+grouper_icons = GrouperFiles(source_folder, result_folder)
+grouper_icons.run()
 
 # Усложненное задание (делать по желанию)
 # Нужно обрабатывать zip-файл, содержащий фотографии, без предварительного извлечения файлов в папку.
