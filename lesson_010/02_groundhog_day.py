@@ -17,37 +17,38 @@
 # При создании собственных исключений максимально использовать функциональность
 # базовых встроенных исключений.
 from random import randint
+import os.path
 
 ENLIGHTENMENT_CARMA_LEVEL = 777
 
 
-class IamGodError(BaseException):
+class IamGodError(Exception):
     pass
 
 
-class DrunkError(BaseException):
+class DrunkError(Exception):
     pass
 
 
-class CarCrashError(BaseException):
+class CarCrashError(Exception):
     pass
 
 
-class GluttonyError(BaseException):
+class GluttonyError(Exception):
     pass
 
 
-class DepressionError(BaseException):
+class DepressionError(Exception):
     pass
 
 
-class SuicideError(BaseException):
+class SuicideError(Exception):
     pass
 
 
 def one_day():
     errors = [IamGodError('Я - Бог'), DrunkError('Напился'), CarCrashError('Разбился на машине'),
-              GluttonyError('Объелся'), DepressionError('Умер от депрессии'), SuicideError('Самоубийство')]
+              GluttonyError('Объелся'), DepressionError('Депрессия'), SuicideError('Самоубийство')]
 
     rand_error = randint(0, 12)
 
@@ -57,24 +58,34 @@ def one_day():
         raise errors[rand_error]
 
 
-karma = 0
+def add_in_error_log(day_error, exception):
+    log_file = 'error.log'
+    if not os.path.exists(log_file):
+        with open(log_file, encoding='utf8', mode='w') as file:
+            file.write('day #{}: {}: {}'.format(day_error, exception.__class__.__name__, exception))
+    else:
+        with open(log_file, encoding='utf8', mode='a') as file:
+            file.write('day #{}: {}: {}\n'.format(day_error, exception.__class__.__name__, exception))
 
+
+karma = 0
+day = 0
 while ENLIGHTENMENT_CARMA_LEVEL > karma:
+    day += 1
     try:
         karma += one_day()
     except IamGodError as exc:
-        print(exc)
+        add_in_error_log(day, exc)
     except DrunkError as exc:
-        print(exc)
+        add_in_error_log(day, exc)
     except CarCrashError as exc:
-        print(exc)
+        add_in_error_log(day, exc)
     except GluttonyError as exc:
-        print(exc)
+        add_in_error_log(day, exc)
     except DepressionError as exc:
-        print(exc)
+        add_in_error_log(day, exc)
     except SuicideError as exc:
-        print(exc)
-    else:
-        print('Текущее значение кармы:', karma)
+        add_in_error_log(day, exc)
+
 
 
