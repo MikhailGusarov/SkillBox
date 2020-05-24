@@ -23,9 +23,13 @@
 # Вызов метода обернуть в try-except.
 import os.path
 
-file_reg = 'registrations.txt'
-file_reg_good = 'registrations_good.log'
-file_reg_bad = 'registrations_bad.log'
+
+class NotNameError(Exception):
+    pass
+
+
+class NotEmailError(Exception):
+    pass
 
 
 def add_in_log(log_file_path, line):
@@ -37,14 +41,27 @@ def add_in_log(log_file_path, line):
             log_file.write(line)
 
 
+file_reg = 'registrations.txt'
+file_reg_good = 'registrations_good.log'
+file_reg_bad = 'registrations_bad.log'
+
 with open(file_reg, encoding='utf8') as file:
     for number_line, line in enumerate(file):
         try:
             name, email, age = str(line[:-1]).split(' ')
+            if not name.isalpha():
+                raise NotNameError('Имя содержит не только буквы')
+            if '@' not in email:
+                raise NotEmailError('e-mail не содержит "@"')
+            if '.' not in email:
+                raise NotEmailError('e-mail не ссодержит "."')
             add_in_log(log_file_path=file_reg_good, line=line)
 
         except ValueError as exc:
             exc_line = 'Line {}: "{}". Ошибка: не присутствуют все 3 поля. Trace: {} {} \n'.format(
                 number_line + 1, line[:-1], type(exc), exc)
             add_in_log(log_file_path=file_reg_bad, line=exc_line)
-
+        except (NotNameError, NotEmailError) as exc:
+            exc_line = 'Line {}: "{}". Ошибка: {} {} \n'.format(
+                number_line + 1, line[:-1], type(exc), exc)
+            add_in_log(log_file_path=file_reg_bad, line=exc_line)
