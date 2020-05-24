@@ -16,10 +16,35 @@
 # - registrations_bad.log для ошибочных, записывать строку и вид ошибки.
 #
 # Для валидации строки данных написать метод, который может выкидывать исключения:
-# - НЕ присутсвуют все три поля: ValueError
+# - НЕ присутсвуют все три поля: ValueError +
 # - поле имени содержит НЕ только буквы: NotNameError (кастомное исключение)
 # - поле емейл НЕ содержит @ и .(точку): NotEmailError (кастомное исключение)
 # - поле возраст НЕ является числом от 10 до 99: ValueError
 # Вызов метода обернуть в try-except.
+import os.path
 
-# TODO здесь ваш код
+file_reg = 'registrations.txt'
+file_reg_good = 'registrations_good.log'
+file_reg_bad = 'registrations_bad.log'
+
+
+def add_in_log(log_file_path, line):
+    if not os.path.exists(log_file_path):
+        with open(log_file_path, encoding='utf8', mode='w') as log_file:
+            log_file.write(line)
+    else:
+        with open(log_file_path, encoding='utf8', mode='a') as log_file:
+            log_file.write(line)
+
+
+with open(file_reg, encoding='utf8') as file:
+    for number_line, line in enumerate(file):
+        try:
+            name, email, age = str(line[:-1]).split(' ')
+            add_in_log(log_file_path=file_reg_good, line=line)
+
+        except ValueError as exc:
+            exc_line = 'Line {}: "{}". Ошибка: не присутствуют все 3 поля. Trace: {} {} \n'.format(
+                number_line + 1, line[:-1], type(exc), exc)
+            add_in_log(log_file_path=file_reg_bad, line=exc_line)
+
