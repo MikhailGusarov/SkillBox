@@ -16,7 +16,7 @@
 # - registrations_bad.log для ошибочных, записывать строку и вид ошибки.
 #
 # Для валидации строки данных написать метод, который может выкидывать исключения:
-# - НЕ присутсвуют все три поля: ValueError +
+# - НЕ присутсвуют все три поля: ValueError
 # - поле имени содержит НЕ только буквы: NotNameError (кастомное исключение)
 # - поле емейл НЕ содержит @ и .(точку): NotEmailError (кастомное исключение)
 # - поле возраст НЕ является числом от 10 до 99: ValueError
@@ -56,12 +56,16 @@ with open(file_reg, encoding='utf8') as file:
             if '.' not in email:
                 raise NotEmailError('e-mail не ссодержит "."')
             add_in_log(log_file_path=file_reg_good, line=line)
+            if int(age) < 10:
+                raise ValueError('Возраст меньше 10')
+            if int(age) > 90:
+                raise ValueError('Возраст больше 90')
 
         except ValueError as exc:
-            exc_line = 'Line {}: "{}". Ошибка: не присутствуют все 3 поля. Trace: {} {} \n'.format(
-                number_line + 1, line[:-1], type(exc), exc)
+            exc_line = 'Line {}: "{}". Ошибка: {} {} \n'.format(
+                number_line + 1, line[:-1], exc.__class__.__name__, exc)
             add_in_log(log_file_path=file_reg_bad, line=exc_line)
         except (NotNameError, NotEmailError) as exc:
             exc_line = 'Line {}: "{}". Ошибка: {} {} \n'.format(
-                number_line + 1, line[:-1], type(exc), exc)
+                number_line + 1, line[:-1], exc.__class__.__name__, exc)
             add_in_log(log_file_path=file_reg_bad, line=exc_line)
