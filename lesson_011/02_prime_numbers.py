@@ -21,28 +21,28 @@ def get_prime_numbers(n):
 #
 # Распечатать все простые числа до 10000 в столбик
 
-#
-# class PrimeNumbers:
-#     def __init__(self, n):
-#         self.n = n
-#         self.prime_numbers = []
-#
-#     def __iter__(self):
-#         self.i = 1
-#         self.prime_numbers = []
-#         return self
-#
-#     def __next__(self):
-#         while True:
-#             self.i += 1
-#             if self.i > self.n:
-#                 raise StopIteration
-#             for prime in self.prime_numbers:
-#                 if self.i % prime == 0:
-#                     break
-#             else:
-#                 self.prime_numbers.append(self.i)
-#                 return self.i
+
+class PrimeNumbers:
+    def __init__(self, n):
+        self.n = n
+        self.prime_numbers = []
+
+    def __iter__(self):
+        self.i = 1
+        self.prime_numbers = []
+        return self
+
+    def __next__(self):
+        while True:
+            self.i += 1
+            if self.i > self.n:
+                raise StopIteration
+            for prime in self.prime_numbers:
+                if self.i % prime == 0:
+                    break
+            else:
+                self.prime_numbers.append(self.i)
+                return self.i
 #
 #
 # prime_number_iterator = PrimeNumbers(n=10000)
@@ -54,17 +54,17 @@ def get_prime_numbers(n):
 # Теперь нужно создать генератор, который выдает последовательность простых чисел до n
 # Распечатать все простые числа до 10000 в столбик
 
-#
-# def prime_numbers_generator(n):
-#     prime_numbers = []
-#     for number in range(2, n + 1):
-#         for prime in prime_numbers:
-#             if number % prime == 0:
-#                 break
-#         else:
-#             prime_numbers.append(number)
-#             yield number
-#     return prime_numbers
+
+def prime_numbers_generator(n):
+    prime_numbers = []
+    for number in range(2, n + 1):
+        for prime in prime_numbers:
+            if number % prime == 0:
+                break
+        else:
+            prime_numbers.append(number)
+            yield number
+    return prime_numbers
 #
 #
 # for number in prime_numbers_generator(n=10000):
@@ -113,3 +113,8 @@ def is_automorphic_number(number):
     str_sq_number = str(number ** 2)
     return str(number) == str_sq_number[-len_number:]
 
+
+print([x for x in prime_numbers_generator(n=10000) if is_lucky_number(x)])
+print([x for x in prime_numbers_generator(n=10000) if is_palindrome(x)])
+print([x for x in prime_numbers_generator(n=10000) if is_automorphic_number(x)])
+print([x for x in prime_numbers_generator(n=10000) if is_lucky_number(x) and is_palindrome(x)])
