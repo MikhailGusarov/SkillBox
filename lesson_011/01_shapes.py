@@ -14,11 +14,16 @@ import simple_draw as sd
 
 
 def get_polygon(n):
-    pass
-    # TODO здесь ваш код
+    def draw_equilateral_figure(point, angle, length):
+        new_point = point
+        for step_angle in range(angle, angle + int((360 - 360 / n)) + 1, int(360 / n)):
+            vector = sd.get_vector(start_point=new_point, angle=step_angle, length=length)
+            vector.draw(width=3)
+            new_point = vector.end_point
+    return draw_equilateral_figure
 
 
-draw_triangle = get_polygon(n=3)
+draw_triangle = get_polygon(n=5)
 draw_triangle(point=sd.get_point(200, 200), angle=13, length=100)
 
 
