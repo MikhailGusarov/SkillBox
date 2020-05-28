@@ -108,4 +108,8 @@ def is_palindrome(number):
     return string_number == string_reverse_number
 
 
+def is_automorphic_number(number):
+    len_number = len(str(number))
+    str_sq_number = str(number ** 2)
+    return str(number) == str_sq_number[-len_number:]
 
