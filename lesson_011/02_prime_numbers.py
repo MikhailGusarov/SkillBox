@@ -22,8 +22,26 @@ def get_prime_numbers(n):
 
 
 class PrimeNumbers:
-    pass
-    # TODO здесь ваш код
+    def __init__(self, n):
+        self.n = n
+        self.prime_numbers = []
+
+    def __iter__(self):
+        self.i = 1
+        self.prime_numbers = []
+        return self
+
+    def __next__(self):
+        while True:
+            self.i += 1
+            if self.i > self.n:
+                raise StopIteration
+            for prime in self.prime_numbers:
+                if self.i % prime == 0:
+                    break
+            else:
+                self.prime_numbers.append(self.i)
+                return self.i
 
 
 prime_number_iterator = PrimeNumbers(n=10000)
@@ -31,19 +49,18 @@ for number in prime_number_iterator:
     print(number)
 
 
-# TODO после подтверждения части 1 преподователем, можно делать
 # Часть 2
 # Теперь нужно создать генератор, который выдает последовательность простых чисел до n
 # Распечатать все простые числа до 10000 в столбик
 
 
-def prime_numbers_generator(n):
-    pass
-    # TODO здесь ваш код
-
-
-for number in prime_numbers_generator(n=10000):
-    print(number)
+# def prime_numbers_generator(n):
+#     pass
+#     # TODO здесь ваш код
+#
+#
+# for number in prime_numbers_generator(n=10000):
+#     print(number)
 
 
 # Часть 3
