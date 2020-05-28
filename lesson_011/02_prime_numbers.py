@@ -54,21 +54,21 @@ def get_prime_numbers(n):
 # Теперь нужно создать генератор, который выдает последовательность простых чисел до n
 # Распечатать все простые числа до 10000 в столбик
 
-
-def prime_numbers_generator(n):
-    prime_numbers = []
-    for number in range(2, n + 1):
-        for prime in prime_numbers:
-            if number % prime == 0:
-                break
-        else:
-            prime_numbers.append(number)
-            yield number
-    return prime_numbers
-
-
-for number in prime_numbers_generator(n=10000):
-    print(number)
+#
+# def prime_numbers_generator(n):
+#     prime_numbers = []
+#     for number in range(2, n + 1):
+#         for prime in prime_numbers:
+#             if number % prime == 0:
+#                 break
+#         else:
+#             prime_numbers.append(number)
+#             yield number
+#     return prime_numbers
+#
+#
+# for number in prime_numbers_generator(n=10000):
+#     print(number)
 
 
 # Часть 3
@@ -86,4 +86,26 @@ for number in prime_numbers_generator(n=10000):
 # простых счастливых палиндромных чисел и так далее. Придумать не менее 2х способов.
 #
 # Подсказка: возможно, нужно будет добавить параметр в итератор/генератор.
+
+
+def is_lucky_number(number):
+    number = str(number)
+    sum_left = 0
+    sum_right = 0
+    center_number = len(number) / 2
+    for i in number[:int(center_number)]:
+        sum_left += int(i)
+    for i in number[ceil(len(number) / 2):]:
+        sum_right += int(i)
+    return sum_left == sum_right
+
+
+def is_palindrome(number):
+    string_number = str(number)
+    list_number = list(string_number)
+    list_number.reverse()
+    string_reverse_number = ''.join(list_number)
+    return string_number == string_reverse_number
+
+
 
