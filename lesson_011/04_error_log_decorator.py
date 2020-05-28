@@ -6,20 +6,37 @@
 # Имя файла лога - function_errors.log
 # Формат лога: <имя функции> <параметры вызова> <тип ошибки> <текст ошибки>
 # Лог файл открывать каждый раз при ошибке в режиме 'a'
+import os.path
 
 
-def log_errors(func):
-    pass
-    # TODO здесь ваш код
+def add_in_log(log_file_path, line):
+    if not os.path.exists(log_file_path):
+        with open(log_file_path, encoding='utf8', mode='w') as log_file:
+            log_file.write(line)
+    else:
+        with open(log_file_path, encoding='utf8', mode='a') as log_file:
+            log_file.write(line)
 
+
+def log_errors(file_path):
+    def log_errors_in_file(func):
+        def surrogate(*args, **kwargs):
+            try:
+                result = func(*args, **kwargs)
+                return result
+            except Exception as exc:
+                exc_line = '{} Ошибка: {} {} \n'.format(func, exc.__class__.__name__, exc)
+                add_in_log(log_file_path=file_path, line=exc_line)
+        return surrogate
+    return log_errors_in_file
 
 # Проверить работу на следующих функциях
-@log_errors
+@log_errors('function_errors.log')
 def perky(param):
     return param / 0
 
 
-@log_errors
+@log_errors('function_errors.log')
 def check_line(line):
     name, email, age = line.split(' ')
     if not name.isalpha():
